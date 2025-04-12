@@ -10,7 +10,7 @@
       }
     },
     {
-      "src": "l.html",
+      "src": "index.html",
       "use": "@vercel/static"
     }
   ],
@@ -20,11 +20,12 @@
       "dest": "langbackend.py"
     },
     {
-      "handle": "filesystem"
+      "src": "/(.*)",
+      "dest": "/index.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "/l.html"
+      "src": "/",
+      "dest": "/index.html"
     }
   ]
 }
