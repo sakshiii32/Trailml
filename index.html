@@ -198,25 +198,17 @@
                 return;
             }
 
-            // Get the backend URL based on the environment
-            const backendUrl = window.location.hostname === 'localhost'
-                ? '/translate'
-                : 'https://your-vercel-app-name.vercel.app/translate';
-
             // Show loading state
             document.getElementById("output").textContent = "Translating...";
 
             // Get the backend URL based on the environment
+            // Using the Vercel deployment URL from the terminal output
             const backendUrl = window.location.hostname.includes('github.io')
-                ? 'https://your-vercel-app-name.vercel.app/translate'
+                ? 'https://trial3-e4npm1hv8-sakshiii32s-projects.vercel.app/translate' // Updated with the correct Vercel deployment URL
                 : '/translate';
 
             // Make the API request
-            axios.post(backendUrl, {
-                name: name,
-                message: message,
-                target_language: language
-            })
+            axios.get(`${backendUrl}?message=${encodeURIComponent(message)}&language=${encodeURIComponent(language)}`)
             .then(function(response) {
                 // Show the translated message in the output div
                 document.getElementById("output").textContent = `${name}, your message in ${language} is: ${response.data.translatedMessage}`;
