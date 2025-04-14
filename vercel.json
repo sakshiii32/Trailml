@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/translate",
-      "dest": "/api/translate.py"
+      "dest": "/api/index.py"
     }
   ]
 }
