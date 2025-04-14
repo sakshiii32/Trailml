@@ -29,8 +29,7 @@ class TranslationRequest(BaseModel):
 @app.get("/translate")
 async def translate_get(message: str, language: str):
     try:
-        # Await the asynchronous translate method
-        translated = await translator.translate(message, dest=language)
+        translated = translator.translate(message, dest=language)
         return JSONResponse(content={"translatedMessage": translated.text})
     except Exception as e:
         error_msg = f"Translation failed: {str(e)}"
@@ -40,13 +39,11 @@ async def translate_get(message: str, language: str):
 @app.post("/translate")
 async def translate_post(request: TranslationRequest):
     try:
-        # Await the asynchronous translate method
-        translated = await translator.translate(request.message, dest=request.target_language)
+        translated = translator.translate(request.message, dest=request.target_language)
         return JSONResponse(content={"translatedMessage": translated.text})
     except Exception as e:
         error_msg = f"Translation failed: {str(e)}"
         return JSONResponse(status_code=400, content={"error": error_msg})
 
-# To run the server, execute:
+# To run the server:
 # uvicorn langbackend:app --reload
-
