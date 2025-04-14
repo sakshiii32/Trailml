@@ -4,28 +4,26 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from googletrans import Translator
 
-# Create FastAPI instance
 app = FastAPI()
 
-# Configure CORS middleware to allow cross-origin requests.
+# Allow cross-origin requests (adjust allowed origins as needed for production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For production, restrict to specific origins
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Create an instance of the Translator
 translator = Translator()
 
-# Define the Pydantic model for POST translation requests
+# Define a pydantic model for the translation request payload.
 class TranslationRequest(BaseModel):
     name: str
     message: str
     target_language: str
 
-# GET endpoint to handle translation via query parameters
+# GET endpoint to handle translation via query parameters.
 @app.get("/translate")
 async def translate_get(message: str, language: str):
     try:
@@ -35,7 +33,7 @@ async def translate_get(message: str, language: str):
         error_msg = f"Translation failed: {str(e)}"
         return JSONResponse(status_code=400, content={"error": error_msg})
 
-# POST endpoint to handle translation via JSON payload
+# POST endpoint to handle translation via JSON payload.
 @app.post("/translate")
 async def translate_post(request: TranslationRequest):
     try:
@@ -44,6 +42,3 @@ async def translate_post(request: TranslationRequest):
     except Exception as e:
         error_msg = f"Translation failed: {str(e)}"
         return JSONResponse(status_code=400, content={"error": error_msg})
-
-# To run the server:
-# uvicorn langbackend:app --reload

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Language Translation</title>
-  <!-- Axios CDN -->
+  <!-- Axios CDN for HTTP requests -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Sacramento&display=swap" rel="stylesheet" />
@@ -22,7 +22,6 @@
       align-items: center;
       background-attachment: fixed;
     }
-
     .container {
       background-color: rgba(255, 255, 255, 0.85);
       border-radius: 12px;
@@ -33,7 +32,6 @@
       text-align: center;
       box-sizing: border-box;
     }
-
     h1 {
       font-family: 'Sacramento', cursive;
       font-size: 3em;
@@ -42,7 +40,6 @@
       font-weight: bold;
       text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
     }
-
     input,
     textarea,
     select {
@@ -57,7 +54,6 @@
       box-sizing: border-box;
       transition: all 0.3s ease;
     }
-
     input:focus,
     textarea:focus,
     select:focus {
@@ -65,12 +61,10 @@
       border-color: #ff6f61;
       background-color: #ffffff;
     }
-
     textarea {
       resize: vertical;
       min-height: 100px;
     }
-
     button {
       padding: 14px 28px;
       background-color: #ff6f61;
@@ -82,12 +76,10 @@
       font-weight: bold;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
-
     button:hover {
       background-color: #bdfcc9;
       transform: scale(1.05);
     }
-
     #output {
       margin-top: 20px;
       font-size: 18px;
@@ -98,7 +90,6 @@
       border-radius: 8px;
       border: 1px solid #f1c7c3;
     }
-
     select {
       cursor: pointer;
     }
@@ -107,7 +98,6 @@
 <body>
   <div class="container">
     <h1>Language Exchange Platform</h1>
-
     <div class="form-container">
       <input type="text" id="name" placeholder="Enter your name" required />
       <textarea id="message" placeholder="Enter message to translate" required></textarea>
@@ -165,7 +155,6 @@
       </select>
       <button id="translateBtn" type="button">Translate</button>
     </div>
-
     <div id="output"></div>
   </div>
 
@@ -182,6 +171,7 @@
 
       document.getElementById("output").textContent = "Translating...";
 
+      // Replace the URL below with your deployed Vercel backend endpoint.
       const backendUrl = "https://trial3-e4npm1hv8-sakshiii32s-projects.vercel.app/translate";
 
       axios.post(backendUrl, {
