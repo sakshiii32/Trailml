@@ -187,6 +187,14 @@
     </div>
 
     <script>
+        // Configuration - Update this section with your deployment information
+        const CONFIG = {
+            // Replace this with your actual Vercel deployment URL (without the /translate endpoint)
+            vercelDeploymentUrl: 'https://your-vercel-deployment-url.vercel.app',
+            // Set to true to enable detailed error logging in the console
+            debugMode: true
+        };
+
         // Function to handle the translation request
         function translateMessage() {
             const name = document.getElementById("name").value;
@@ -198,18 +206,18 @@
                 return;
             }
 
-            // Get the backend URL based on the environment
-            const backendUrl = window.location.hostname === 'localhost'
-                ? '/translate'
-                : 'https://your-vercel-app-name.vercel.app/translate';
-
             // Show loading state
             document.getElementById("output").textContent = "Translating...";
 
             // Get the backend URL based on the environment
-            const backendUrl = window.location.hostname.includes('github.io')
-                ? 'https://your-vercel-app-name.vercel.app/translate'
+            const backendUrl = window.location.hostname.includes('github.io') || window.location.hostname === 'localhost'
+                ? `${CONFIG.vercelDeploymentUrl}/translate` // Use the configured Vercel URL
                 : '/translate';
+                
+            // Log the backend URL for debugging
+            if (CONFIG.debugMode) {
+                console.log('Using backend URL:', backendUrl);
+            }
 
             // Make the API request
             axios.post(backendUrl, {
@@ -223,8 +231,36 @@
             })
             .catch(function(error) {
                 // Handle error if translation fails
-                console.error("Error during translation:", error);
-                document.getElementById("output").textContent = "Sorry, there was an error with translation. Please try again later.";
+                if (CONFIG.debugMode) {
+                    console.error("Error during translation:", error);
+                }
+                
+                let errorMessage = "Sorry, there was an error with translation. Please try again later.";
+                
+                // Add more detailed error information for debugging
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    if (CONFIG.debugMode) {
+                        console.error("Response data:", error.response.data);
+                        console.error("Response status:", error.response.status);
+                    }
+                    errorMessage += " (Server responded with status: " + error.response.status + ")";
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    if (CONFIG.debugMode) {
+                        console.error("No response received:", error.request);
+                    }
+                    errorMessage += " (No response from server - check if the backend is running and verify your Vercel URL in the CONFIG section)";
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    if (CONFIG.debugMode) {
+                        console.error("Error message:", error.message);
+                    }
+                    errorMessage += " (Error: " + error.message + ")";
+                }
+                
+                document.getElementById("output").textContent = errorMessage;
             });
         }
     </script>
