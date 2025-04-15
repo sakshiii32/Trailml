@@ -4,94 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Language Translation</title>
-  <!-- Axios CDN for HTTP requests -->
+  <!-- Axios for HTTP requests -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Sacramento&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1521747116042-5a810fda9664');
-      background-size: cover;
-      background-position: center;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+      background-color: #f0f4f8;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-attachment: fixed;
+      height: 100vh;
+      margin: 0;
     }
     .container {
-      background-color: rgba(255, 255, 255, 0.85);
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-      padding: 40px;
-      max-width: 600px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 100%;
-      text-align: center;
-      box-sizing: border-box;
+      max-width: 500px;
     }
     h1 {
       font-family: 'Sacramento', cursive;
-      font-size: 3em;
-      color: #ff6f61;
-      margin-bottom: 30px;
-      font-weight: bold;
-      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-    }
-    input,
-    textarea,
-    select {
-      padding: 14px;
-      margin: 12px 0;
-      width: 100%;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 16px;
-      background-color: #fdf1f3;
       color: #333;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
-    input:focus,
-    textarea:focus,
-    select:focus {
-      outline: none;
-      border-color: #ff6f61;
-      background-color: #ffffff;
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea, select {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
     }
     textarea {
       resize: vertical;
       min-height: 100px;
     }
     button {
-      padding: 14px 28px;
-      background-color: #ff6f61;
-      color: white;
+      padding: 0.8rem;
+      background-color: #4a90e2;
+      color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-weight: 700;
+      transition: background-color 0.3s;
     }
     button:hover {
-      background-color: #bdfcc9;
-      transform: scale(1.05);
+      background-color: #357abd;
     }
     #output {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #ff6f61;
-      font-weight: bold;
-      background-color: #ffefef;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #f1c7c3;
-    }
-    select {
-      cursor: pointer;
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      color: #333;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -102,56 +77,12 @@
       <input type="text" id="name" placeholder="Enter your name" required />
       <textarea id="message" placeholder="Enter message to translate" required></textarea>
       <select id="language">
+        <option value="">Select Language</option>
         <option value="es">Spanish</option>
         <option value="fr">French</option>
         <option value="de">German</option>
-        <option value="it">Italian</option>
-        <option value="ja">Japanese</option>
-        <option value="ko">Korean</option>
-        <option value="en">English</option>
-        <option value="zh">Chinese</option>
-        <option value="ru">Russian</option>
-        <option value="pt">Portuguese</option>
-        <option value="ar">Arabic</option>
         <option value="hi">Hindi</option>
-        <option value="bn">Bengali</option>
-        <option value="pa">Punjabi</option>
-        <option value="ur">Urdu</option>
-        <option value="tr">Turkish</option>
-        <option value="vi">Vietnamese</option>
-        <option value="th">Thai</option>
-        <option value="fa">Persian (Farsi)</option>
-        <option value="sw">Swahili</option>
-        <option value="nl">Dutch</option>
-        <option value="pl">Polish</option>
-        <option value="ro">Romanian</option>
-        <option value="el">Greek</option>
-        <option value="he">Hebrew</option>
-        <option value="no">Norwegian</option>
-        <option value="sv">Swedish</option>
-        <option value="fi">Finnish</option>
-        <option value="cs">Czech</option>
-        <option value="hu">Hungarian</option>
-        <option value="id">Indonesian</option>
-        <option value="as">Assamese</option>
-        <option value="bh">Bhojpuri</option>
-        <option value="gu">Gujarati</option>
-        <option value="kn">Kannada</option>
-        <option value="ml">Malayalam</option>
-        <option value="mr">Marathi</option>
-        <option value="ne">Nepali</option>
-        <option value="or">Odia (Oriya)</option>
-        <option value="sa">Sanskrit</option>
-        <option value="sd">Sindhi</option>
-        <option value="ta">Tamil</option>
-        <option value="te">Telugu</option>
-        <option value="ma">Maithili</option>
-        <option value="ks">Kashmiri</option>
-        <option value="mni">Manipuri (Meitei)</option>
-        <option value="doi">Dogri</option>
-        <option value="kok">Konkani</option>
-        <option value="sant">Santali</option>
-        <option value="bodo">Bodo</option>
+        <option value="zh-cn">Chinese (Simplified)</option>
       </select>
       <button id="translateBtn" type="button">Translate</button>
     </div>
@@ -171,8 +102,8 @@
 
       document.getElementById("output").textContent = "Translating...";
 
-      // Updated URL to point to the latest Vercel backend endpoint
-      const backendUrl = "https://trial3-bvdbt5n1a-sakshiii32s-projects.vercel.app/translate";
+      // Use relative URL for the backend
+      const backendUrl = "/translate";
 
       axios.post(backendUrl, {
         name: name,
